@@ -33,6 +33,7 @@ pub mod dao {
         ctx: Context<CreateProposal>,
         title: String,
         description: String,
+        amount_requested: u64,
     ) -> Result<()> {
         let dao_state = &mut ctx.accounts.dao_state;
         dao_state.total_proposals += 1;
@@ -42,6 +43,7 @@ pub mod dao {
         proposal_account.description = description;
         proposal_account.upvotes = 0;
         proposal_account.downvotes = 0;
+        proposal_account.amount_requested = amount_requested;
         proposal_account.is_executed = false;
         Ok(())
     }
@@ -99,6 +101,7 @@ pub struct JoinDao<'info> {
         space = 8+MemberAccount::INIT_SPACE,
     )]
     pub member_account: Account<'info, MemberAccount>,
+    #[account(mut)]
     pub dao_state: Account<'info, DaoState>,
     pub system_program: Program<'info, System>,
 }
