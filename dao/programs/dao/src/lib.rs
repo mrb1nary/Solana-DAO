@@ -83,7 +83,7 @@ pub struct Initialize<'info> {
     #[account(
         init,
         payer = user,
-        space = 8+16,
+        space = 8+ DaoState::INIT_SPACE,
     )]
     pub dao_state: Account<'info, DaoState>,
     pub system_program: Program<'info, System>,
@@ -96,7 +96,7 @@ pub struct JoinDao<'info> {
     #[account(
         init,
         payer = user,
-        space = 8+8,
+        space = 8+MemberAccount::INIT_SPACE,
     )]
     pub member_account: Account<'info, MemberAccount>,
     pub dao_state: Account<'info, DaoState>,
